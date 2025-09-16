@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Car - O carro perfeito para cada momento da sua vida</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- VLibras Widget -->
+    <script src="https://vlibras.gov.br/app/vlibras-widget.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+
+    <style>
+        :root {
+            --primary-color: #0a863e; /* Verde original */
+            --primary-color-rgb: 10, 134, 62; /* Adicionado para o box-shadow rgba */
+            --secondary-color: #3498db; /* Azul original */
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --accent-color: #f1c40f;
+            --text-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --body-bg-gradient-start: var(--dark-color);
+            --body-bg-gradient-end: #1a2530;
+            --header-text-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --font-size-base: 1rem;
+            --line-height-base: 1.6;
+        }
+
+        /* Tema Claro */
+        body.light-mode {
+            --primary-color: #28a745; /* Verde mais claro */
+            --primary-color-rgb: 40, 167, 69; /* RGB para o tema claro */
+            --secondary-color: #007bff; /* Azul mais claro */
+            --dark-color: #f8f9fa; /* Fundo claro */
+            --light-color: #343a40; /* Texto escuro */
+            --accent-color: #ffc107; /* Amarelo */
+            --text-color: #212529;
+            --card-bg: rgba(0, 0, 0, 0.05);
+            --body-bg-gradient-start: #e9ecef;
+            --body-bg-gradient-end: #f8f9fa;
+            --header-text-shadow: none;
+            --border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modo de Leitura (Acessibilidade) */
+        body.reading-mode {
+            --font-size-base: 1.15rem; /* Aumenta o tamanho da fonte */
+            --line-height-base: 1.8; /* Aumenta o espaçamento entre linhas */
+            word-spacing: 0.1em; /* Aumenta o espaçamento entre palavras */
+            letter-spacing: 0.05em; /* Aumenta o espaçamento entre letras */
+        }
+
+        /* Estilos para o modo daltônico */
+        body.daltonism-mode {
+            filter: grayscale(100%) contrast(120%); /* Exemplo simples de filtro */
+        }
+
+        /* Estilos para o aumento de fonte */
+        body.large-font {
+            --font-size-base: 1.25rem; /* Aumenta ainda mais a fonte */
+            --line-height-base: 2.0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Roboto', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--body-bg-gradient-start), var(--body-bg-gradient-end));
+            color: var(--light-color);
+            overflow-x: hidden;
+            line-height: var(--line-height-base);
+            font-size: var(--font-size-base);
+            transition: background 0.5s ease, color 0.5s ease, font-size 0.3s ease, line-height 0.3s ease, filter 0.3s ease;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--header-text-shadow);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .circles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.2;
+            animation: float linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+        
+        /* NOVA SEÇÃO DE VEÍCULOS COM SETAS */
+        .vehicles-section {
+            position: relative;
+            padding: 4rem 0;
+            z-index: 5;
+            overflow: hidden;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 2.2rem;
+            color: var(--light-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        .vehicles-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .vehicles-slider {
+            display: flex;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            padding: 20px 0;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .vehicles-slider::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+        
+        .vehicle-card {
+            flex: 0 0 auto;
+            width: 300px;
+            height: 400px;
+            margin: 0 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+        
+        .vehicle-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        /* Estilos gerais para imagens de veículos (mantido como base) */
+        .vehicle-card img {
+            width: 100%;
+            height: 190px; /* Altura padrão para todas as imagens */
+            object-fit: cover; /* Comportamento padrão: cobre o espaço, cortando se necessário */
+            transition: transform 0.5s ease;
+        }
+        
+        .vehicle-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Estilos específicos para cada imagem */
+        .img-offroad {
+            height: 200px; /* Um pouco mais alta */
+            object-fit: contain; /* Mostra a imagem inteira, pode deixar barras laterais/superiores */
+            border-radius: 10px; /* Bordas mais arredondadas */
+        }
+
+        .img-familiar {
+            height: 180px; /* Um pouco mais baixa */
+            object-position: top; /* Foca na parte superior da imagem */
+        }
+
+        .img-executivo {
+            height: 210px; /* Mais alta */
+            object-fit: cover;
+            border-radius: 5px; /* Bordas menos arredondadas */
+        }
+
+        .img-compacto {
+            height: 170px; /* Mais baixa */
+            object-fit: fill; /* Estica a imagem para preencher, pode distorcer */
+        }
+
+        .img-picape {
+            height: 220px; /* Bem alta */
+            object-fit: cover;
+            filter: brightness(0.9); /* Escurece um pouco a imagem */
+        }
+
+        .img-minivan {
+            height: 195px; /* Levemente diferente do padrão */
+            object-fit: cover;
+            border-bottom-left-radius: 20px; /* Apenas um canto arredondado */
+        }
+
+        .img-eletrico {
+            height: 185px;
+            object-fit: scale-down; /* Reduz a imagem para caber, mas não a aumenta */
+        }
+
+        .img-conversivel {
+            height: 205px;
+            object-fit: cover;
+            object-position: bottom; /* Foca na parte inferior da imagem */
+            border-top-right-radius: 15px; /* Apenas um canto arredondado */
+        }
+        
+        .vehicle-info {
+            padding: 1.5rem;
+            position: relative;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .vehicle-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .vehicle-info p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        .vehicle-price {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-top: auto;
+        }
+        
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+        
+        .slider-arrow {
+            background: var(--card-bg);
+            border: none;
+            color: var(--light-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .slider-arrow:hover {
+            background: var(--primary-color);
+        }
+        
+        .content-section {
+            position: relative;
+            z-index: 5;
+            padding: 4rem 0;
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .topic-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary-color); /* Ajustado para usar a cor primária */
+        }
+        
+        .topic-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.4rem;
+        }
+        
+        .topic-card i {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .topic-card p {
+            flex-grow: 1;
+            color: var(--light-color);
+        }
+        
+        .features-section {
+            padding: 4rem 0;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .feature-box {
+            flex: 1 1 250px;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--light-color);
+        }
+        
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--light-color);
+            opacity: 0.8;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 5;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .footer-column {
+            flex: 1 1 250px;
+        }
+        
+        .footer-column h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-links i {
+            font-size: 0.8rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            color: var(--light-color);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Botão de Contraste */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-color);
+        }
+
+        /* Botão do Chatbot WhatsApp */
+        .whatsapp-chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366; /* Cor do WhatsApp */
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Botão de Acessibilidade Principal */
+        .accessibility-button {
+            position: fixed;
+            bottom: 90px; /* Ajustado via JS */
+            right: 20px;
+            background-color: var(--secondary-color); /* Cor de destaque */
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .accessibility-button:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-color);
+        }
+
+        /* Estado selecionado do botão de acessibilidade */
+        .accessibility-button.selected {
+            background-color: var(--primary-color); /* Cor quando selecionado */
+            box-shadow: 0 0 0 5px rgba(var(--primary-color-rgb), 0.5); 
+        }
+
+        /* Contêiner das opções de acessibilidade */
+        .accessibility-options-container {
+            position: fixed;
+            bottom: 160px; /* Posição inicial, ajustada pelo JS */
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 99; /* Um pouco abaixo do botão principal */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        }
+
+        .accessibility-options-container.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .accessibility-option-button {
+            background-color: var(--secondary-color); /* Cor de destaque */
+            color: white;
+            border-radius: 50px; /* Botões mais alongados */
+            width: 150px; /* Largura para acomodar texto */
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Alinha ícone e texto à esquerda */
+            padding: 0 15px;
+            font-size: 1rem; /* Tamanho da fonte padrão */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            border: none;
+        }
+
+        .accessibility-option-button i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .accessibility-option-button .option-text {
+            font-size: 0.8rem; /* Fonte menor para o texto do botão */
+            white-space: nowrap; /* Evita quebra de linha */
+        }
+
+        .accessibility-option-button:hover {
+            transform: translateX(-5px);
+            background-color: var(--primary-color);
+        }
+
+        .accessibility-option-button.selected {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 5px rgba(var(--primary-color-rgb), 0.5);
+        }
+        
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .vehicle-card {
+                width: 250px;
+                height: 350px;
+            }
+            
+            .vehicle-card img {
+                height: 200px;
+            }
+            
+            .vehicle-info {
+                height: 150px;
+                padding: 1.2rem;
+            }
+
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .vehicle-card {
+                width: 220px;
+                height: 320px;
+                margin: 0 10px;
+            }
+            
+            .vehicle-card img {
+                height: 180px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .topic-card h2 {
+                font-size: 1.2rem;
+            }
+
+            .whatsapp-chat-button, .accessibility-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.8rem;
+                bottom: 15px;
+                right: 15px;
+            }
+            .accessibility-button {
+                bottom: 75px; /* Ajusta a posição para telas menores */
+            }
+            .accessibility-options-container {
+                right: 15px;
+                bottom: 140px; /* Ajusta a posição para telas menores */
+            }
+            .accessibility-option-button {
+                width: 130px;
+                height: 45px;
+                font-size: 0.9rem;
+            }
+            .accessibility-option-button i {
+                font-size: 1.3rem;
+            }
+            .accessibility-option-button .option-text {
+                font-size: 0.7rem; /* Fonte ainda menor para o texto do botão em telas pequenas */
+            }
+        }
+        
+        @media (max-width: 576px) {
+            header {
+                padding: 2rem 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .vehicle-card {
+                width: 200px;
+                height: 300px;
+            }
+            
+            .vehicle-card img {
+                height: 160px;
+            }
+            
+            .vehicle-info {
+                padding: 1rem;
+                height: 140px;
+            }
+            
+            .vehicle-info h3 {
+                font-size: 1.1rem;
+            }
+            
+            .vehicle-info p {
+                font-size: 0.8rem;
+            }
+            
+            .topic-card {
+                padding: 1.5rem;
+            }
+            
+            .feature-box {
+                flex: 1 1 100%;
+            }
+            
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div vw class="enabled">
+       <div vw-access-button class="active"></div>
+       <div vw-plugin-wrapper>
+         <div class="vw-plugin-top-wrapper"></div> 
+       </div>
+     </div>
+     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+     <script>
+       new window.VLibras.Widget('https://vlibras.gov.br/app');
+     </script>
+
+    <div class="circles-container">
+        <!-- Círculos animados -->
+        <div class="circle" style="width: 300px; height: 300px; background: var(--primary-color); top: 10%; left: 5%; animation-duration: 20s;"></div>
+        <div class="circle" style="width: 500px; height: 500px; background: var(--secondary-color); top: 50%; left: 30%; animation-duration: 25s; animation-delay: -5s;"></div>
+        <div class="circle" style="width: 400px; height: 400px; background: var(--accent-color); top: 30%; left: 70%; animation-duration: 30s; animation-delay: -10s;"></div>
+        <div class="circle" style="width: 200px; height: 200px; background: #e74c3c; top: 70%; left: 80%; animation-duration: 15s; animation-delay: -7s;"></div>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1>Prime Car</h1>
+            <p class="subtitle">O carro perfeito para cada momento da sua vida.</p>
+            <!-- Botão "Reserve Agora" que vai direto para o WhatsApp -->
+            <a href="https://wa.me/5562992316254?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20uma%20reserva%20de%20carro%20na%20Prime%20Car." 
+               class="cta-button" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               aria-label="Reserve Agora via WhatsApp">
+               Reserve Agora
+            </a>
+        </div>
+        <!-- Botão de Contraste (Sol/Lua) -->
+        <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema claro/escuro">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+    
+    <!-- NOVA SEÇÃO DE VEÍCULOS COM SETAS (substitui o carrossel) -->
+    <section class="vehicles-section" aria-labelledby="fleet-title">
+        <div class="container">
+            <h2 class="section-title" id="fleet-title">Nossa Frota</h2>
+            <div class="vehicles-container">
+                <div class="vehicles-slider" id="vehicles-slider">
+                    <!-- Veículo 1 -->
+                    <div class="vehicle-card" role="group" aria-label="Carro Esportivo">
+                        <img src="img1.png" alt="Carro esportivo" class="img-offroad">
+                        <div class="vehicle-info">
+                            <h3>Carro Off-road</h3>
+                            <p>Desempenho e elegância</p>
+                            <div class="vehicle-price">A partir de R$ 220/dia</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Veículo 2 -->
+                    <div class="vehicle-card" role="group" aria-label="SUV Familiar">
+                        <img src="img2.png" alt="SUV familiar" class="img-familiar">
+                        <div class="vehicle-info">
+                            <h3>Familiar</h3>
+                            <p>Conforto para toda a família</p>
+                            <div class="vehicle-price">A partir de R$ 120/dia</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Veículo 3 -->
+                    <div class="vehicle-card" role="group" aria-label="Carro Executivo">
+                        <img src="img3.png" alt="Carro executivo" class="img-executivo">
+                        <div class="vehicle-info">
+                            <h3>Carro Executivo</h3>
+                            <p>Conforto e sofisticação</p>
+                            <div class="vehicle-price">A partir de R$ 180/dia</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Veículo 4 -->
+                    <div class="vehicle-card" role="group" aria-label="Compacto Econômico">
+                        <img src="img4.png" alt="Carro compacto" class="img-compacto">
+                        <div class="vehicle-info">
+                            <h3>Compacto Econômico</h3>
+                            <p>Perfeito para o dia a dia na cidade</p>
+                            <div class="vehicle-price">A partir de R$ 80/dia</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Veículo 5 -->
+                    <div class="vehicle-card" role="group" aria-label="Picape">
+                        <img src="img5.png" alt="Picape" class="img-picape">
+                        <div class="vehicle-info">
+                            <h3>Picape</h3>
+                            <p>Força e versatilidade para qualquer desafio</p>
+                            <div class="vehicle-price">A partir de R$ 160/dia</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Veículo 6 -->
+                    <div class="vehicle-card" role="group" aria-label="Minivan">
+                        <img src="img6.png" alt="Minivan" class="img-minivan">
+                        <div class="vehicle-info">
+                            <h3>Minivan</h3>
+                            <p>Espaço e conforto para viagens em grupo</p>
+                            <div class="vehicle-price">A partir de R$ 140/dia</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Veículo 7 -->
+                    <div class="vehicle-card" role="group" aria-label="Carro Elétrico">
+                        <img src="img7.png" alt="Carro elétrico" class="img-eletrico">
+                        <div class="vehicle-info">
+                            <h3>Carro Elétrico</h3>
+                            <p>Tecnologia e sustentabilidade</p>
+                            <div class="vehicle-price">A partir de R$ 200/dia</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Veículo 8 -->
+                    <div class="vehicle-card" role="group" aria-label="Conversível">
+                        <img src="img8.png"Conversível" class="img-conversivel">
+                        <div class="vehicle-info">
+                            <h3>Conversível</h3>
+                            <p>Liberdade e estilo para aproveitar o caminho</p>
+                            <div class="vehicle-price">A partir de R$ 250/dia</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-controls">
+                    <button class="slider-arrow" id="slider-prev" aria-label="Veículos anteriores">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="slider-arrow" id="slider-next" aria-label="Próximos veículos">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="content-section" aria-labelledby="why-primecar-title">
+        <div class="container">
+            <h2 class="section-title" id="why-primecar-title">Por que escolher a Prime Car?</h2>
+            <div class="topics-grid">
+                <div class="topic-card" role="article" aria-labelledby="topic-online-reservation">
+                    <h2 id="topic-online-reservation"><i class="fas fa-desktop" aria-hidden="true"></i>Reserva Online</h2>
+                    <p>Na Prime Car, você escolhe como alugar. Prefere a agilidade da reserva online ou a atenção do nosso atendimento presencial? Sua comodidade é o nosso destino.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="topic-your-journey">
+                    <h2 id="topic-your-journey"><i class="fas fa-route" aria-hidden="true"></i>Sua Viagem Começa Aqui</h2>
+                    <p>Planejando uma viagem? A Prime Car tem o carro certo para sua aventura. Sem burocracia, com total segurança e a garantia de um veículo impecável.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="topic-flexibility">
+                    <h2 id="topic-flexibility"><i class="fas fa-calendar-alt" aria-hidden="true"></i>Flexibilidade Total</h2>
+                    <p>A Prime Car se adapta ao seu ritmo. Alugue por um dia, uma semana ou o tempo que precisar. Nossos contratos são flexíveis para caber perfeitamente na sua rotina.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="topic-city-in-your-hands">
+                    <h2 id="topic-city-in-your-hands"><i class="fas fa-map-marked-alt" aria-hidden="true"></i>A cidade em Suas Mãos</h2>
+                    <p>Explore com total liberdade. Conheça as melhores rotas, vá a todos os seus compromissos e volta para casa com a certeza de ter feito a escolha certa.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="topic-comfort-quality">
+                    <h2 id="topic-comfort-quality"><i class="fas fa-couch" aria-hidden="true"></i>Conforto e Qualidade</h2>
+                    <p>De um compacto econômico para o dia a dia a uma picape espaçoso para a família. Nossa frota é constantemente renovada para garantir que sua única preocupação seja aproveitar a viagem.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="topic-smart-economy">
+                    <h2 id="topic-smart-economy"><i class="fas fa-piggy-bank" aria-hidden="true"></i>Economia Inteligente</h2>
+                    <p>Alugar um carro pode ser mais vantajoso do que você imagina. Evite gastos com manutenção e impostos. Na Prime Car, você paga apenas pelo tempo de uso e aproveita todas as vantagens.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="topic-support">
+                    <h2 id="topic-support"><i class="fas fa-headset" aria-hidden="true"></i>Suporte que Faz a Diferença</h2>
+                    <p>Nossa equipe está sempre pronta para ajudar. Do momento da reserva até a devolução do veículo, conte com um atendimento especializado e personalizado para qualquer necessidade.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="topic-we-are-primecar">
+                    <h2 id="topic-we-are-primecar"><i class="fas fa-award" aria-hidden="true"></i>Somos a Prime Car</h2>
+                    <p>Confiança, agilidade e os melhores carros para você. Somos a Prime Car, sua parceira de mobilidade, oferecendo a melhor experiência de aluguel, seja na web ou pessoalmente.</p>
+                </div>
+
+                <div class="topic-card" role="article" aria-labelledby="topic-perfect-journey">
+                    <h2 id="topic-perfect-journey"><i class="fas fa-key" aria-hidden="true"></i>A Jornada Perfeita</h2>
+                    <p>Na Prime Car, a liberdade está a uma reserva de distância. Alugue o carro perfeito para a sua jornada e conte com a segurança e a qualidade que você merece. Sua próxima aventura espera por você.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features-section" aria-labelledby="our-services-title">
+        <div class="container">
+            <h2 class="section-title" id="our-services-title">Nossos Serviços</h2>
+            <div class="features-container">
+                <div class="feature-box" role="article" aria-labelledby="service-long-term-rental">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="feature-title" id="service-long-term-rental">Aluguel de Longa Duração</h3>
+                    <p class="feature-desc">Planos especiais para empresas e clientes que precisam de veículos por períodos prolongados.</p>
+                </div>
+                
+                <div class="feature-box" role="article" aria-labelledby="service-full-insurance">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="feature-title" id="service-full-insurance">Seguro Completo</h3>
+                    <p class="feature-desc">Proteção total para sua tranquilidade em qualquer situação.</p>
+                </div>
+                
+                <div class="feature-box" role="article" aria-labelledby="service-24h-assistance">
+                    <div class="feature-icon">
+                        <i class="fas fa-road" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="feature-title" id="service-24h-assistance">Assistência 24h</h3>
+                    <p class="feature-desc">Estamos sempre disponíveis para ajudar no que for preciso, a qualquer hora.</p>
+                </div>
+                
+                <div class="feature-box" role="article" aria-labelledby="service-competitive-prices">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="feature-title" id="service-competitive-prices">Preços Competitivos</h3>
+                    <p class="feature-desc">Oferecemos o melhor custo-benefício do mercado de aluguel de veículos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOVA SEÇÃO: Nossa Política de Privacidade (LGPD) -->
+    <section class="content-section" aria-labelledby="lgpd-title">
+        <div class="container">
+            <h2 class="section-title" id="lgpd-title">Nossa Política de Privacidade (LGPD)</h2>
+            <div class="topics-grid">
+                <div class="topic-card" role="article" aria-labelledby="lgpd-commitment-title">
+                    <h2 id="lgpd-commitment-title"><i class="fas fa-shield-alt" aria-hidden="true"></i>Compromisso com Seus Dados</h2>
+                    <p>Na Prime Car, a segurança e a privacidade dos seus dados são prioridade. Atuamos em conformidade com a Lei Geral de Proteção de Dados (LGPD), garantindo que todas as informações coletadas sejam tratadas com o máximo cuidado e respeito.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="lgpd-transparency-title">
+                    <h2 id="lgpd-transparency-title"><i class="fas fa-eye" aria-hidden="true"></i>Transparência e Controle</h2>
+                    <p>Você tem total controle sobre seus dados. Informamos de forma clara como suas informações são utilizadas, e você pode, a qualquer momento, solicitar acesso, correção ou exclusão dos seus dados pessoais conosco.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="lgpd-security-title">
+                    <h2 id="lgpd-security-title"><i class="fas fa-lock" aria-hidden="true"></i>Segurança da Informação</h2>
+                    <p>Implementamos medidas de segurança robustas para proteger seus dados contra acessos não autorizados, perdas ou vazamentos. Nossa equipe é treinada para garantir a integridade e confidencialidade das suas informações.</p>
+                </div>
+                
+                <div class="topic-card" role="article" aria-labelledby="lgpd-contact-title">
+                    <h2 id="lgpd-contact-title"><i class="fas fa-headset" aria-hidden="true"></i>Fale Conosco sobre LGPD</h2>
+                    <p>Se tiver dúvidas ou precisar exercer seus direitos relacionados à LGPD, nossa equipe está à disposição. Entre em contato através dos nossos canais de atendimento para mais informações.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Prime Car</h3>
+                    <p>Sua escolha inteligente para locação de veículos. Oferecemos conforto, segurança e qualidade para todos os momentos.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#top" aria-label="Ir para a página inicial"><i class="fas fa-chevron-right" aria-hidden="true"></i> Home</a></li>
+                        <li><a href="#fleet-title" aria-label="Ver nossa frota"><i class="fas fa-chevron-right" aria-hidden="true"></i> Nossa Frota</a></li>
+                        <li><a href="#lgpd-title" aria-label="Ver nossa política de privacidade"><i class="fas fa-chevron-right" aria-hidden="true"></i> Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://www.google.com.br/maps?hl=pt-BR" aria-label="Endereço da Prime Car"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Av. Perimetral Norte, 548 Goiânia - GO</a></li>
+                        <li><a href="https://wa.me/5562992316254?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20aluguel%20de%20carros%20da%20Prime%20Car." aria-label="Ligar para Prime Car"><i class="fas fa-phone" aria-hidden="true"></i> (62) 9 9231-6254</a></li>
+                        <li><a href="mailto:servicos@primecar.com.br" aria-label="Enviar e-mail para Prime Car"><i class="fas fa-envelope" aria-hidden="true"></i> servicos@primecar.com.br</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="social-links">
+            </div>
+            
+            <div class="copyright">
+                <p>Rafael Ribeiro / Vitor Guedes / Ana Luiza Neres / Weslley Borges / João Pedro Ferraz / Andre Oliveira</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão flutuante do WhatsApp Chatbot -->
+    <a href="https://wa.me/5562992316254?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20aluguel%20de%20carros%20da%20Prime%20Car." 
+       class="whatsapp-chat-button" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Iniciar conversa no WhatsApp com a Prime Car">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Botão de Acessibilidade Principal -->
+    <button id="accessibility-toggle" class="accessibility-button" aria-label="Ativar/desativar opções de acessibilidade">
+        <i class="fas fa-universal-access"></i>
+    </button>
+
+    <!-- Contêiner para as opções de acessibilidade adicionais -->
+    <div class="accessibility-options-container">
+        <button id="daltonism-toggle" class="accessibility-option-button" aria-label="Ativar/desativar modo para daltônicos">
+            <i class="fas fa-eye-dropper"></i>
+            <span class="option-text">Daltônico</span>
+        </button>
+        <button id="screen-reader-toggle" class="accessibility-option-button" aria-label="Ativar/desativar leitor de tela">
+            <i class="fas fa-volume-up"></i>
+            <span class="option-text">Leitor de Tela</span>
+        </button>
+    </div>
+    
+    <script>
+        // Variável global para controlar o estado do leitor de texto
+        let isTextReaderActive = false;
+        let currentUtterance = null; // Para controlar a fala atual
+        let isAccessibilityMenuOpen = false; // Novo: para controlar o menu de acessibilidade
+
+        // Função para falar o texto
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                // Cancela a fala anterior se houver
+                if (currentUtterance) {
+                    window.speechSynthesis.cancel();
+                }
+                
+                currentUtterance = new SpeechSynthesisUtterance(text);
+                currentUtterance.lang = 'pt-BR'; // Define o idioma para português do Brasil
+                window.speechSynthesis.speak(currentUtterance);
+            } else {
+                console.warn("API de Síntese de Fala não suportada neste navegador.");
+            }
+        }
+
+        // Função para parar a fala
+        function stopSpeaking() {
+            if ('speechSynthesis' in window && currentUtterance) {
+                window.speechSynthesis.cancel();
+                currentUtterance = null;
+            }
+        }
+
+        // Adiciona/remove eventos de mouse para leitura de texto
+        function toggleTextReaderEvents(enable) {
+            // Elementos que serão lidos. Adicione ou remova seletores conforme necessário.
+            const readableElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, a.cta-button, .feature-desc, .subtitle, .vehicle-info p, .vehicle-info h3, .footer-column p, .footer-links a, .copyright p'); 
+
+            readableElements.forEach(element => {
+                if (enable) {
+                    // Evita adicionar múltiplos listeners
+                    if (!element.hasAttribute('data-readable-listener')) {
+                        element.addEventListener('mouseover', handleMouseOver);
+                        element.addEventListener('mouseout', handleMouseOut);
+                        element.setAttribute('data-readable-listener', 'true'); // Marca que o listener foi adicionado
+                    }
+                } else {
+                    if (element.hasAttribute('data-readable-listener')) {
+                        element.removeEventListener('mouseover', handleMouseOver);
+                        element.removeEventListener('mouseout', handleMouseOut);
+                        element.removeAttribute('data-readable-listener');
+                    }
+                }
+            });
+        }
+
+        function handleMouseOver(event) {
+            if (isTextReaderActive) {
+                // Prioriza aria-label, depois alt, depois innerText
+                const textToSpeak = event.target.getAttribute('aria-label') || 
+                                   event.target.alt || 
+                                   event.target.innerText;
+                
+                // Limpa o texto para evitar leitura de elementos ocultos ou irrelevantes
+                const cleanedText = textToSpeak ? textToSpeak.replace(/\s+/g, ' ').trim() : '';
+
+                if (cleanedText && cleanedText.length > 0) {
+                    speakText(cleanedText);
+                }
+            }
+        }
+
+        function handleMouseOut() {
+            if (isTextReaderActive) {
+                stopSpeaking();
+            }
+        }
+
+        // Cria círculos adicionais dinamicamente
+        function createCircles() {
+            const colors = ['#2ecc71', '#3498db', '#f1c40f', '#e74c3c', '#9b59b6', '#1abc9c'];
+            const container = document.querySelector('.circles-container');
+            
+            // Remove círculos existentes antes de criar novos para evitar duplicação em resize
+            container.innerHTML = ''; 
+
+            for (let i = 0; i < 5; i++) {
+                const size = Math.random() * 400 + 100;
+                const circle = document.createElement('div');
+                circle.className = 'circle';
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                circle.style.top = `${Math.random() * 100}%`;
+                circle.style.left = `${Math.random() * 100}%`;
+                circle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                circle.style.animationDelay = `-${Math.random() * 15}s`;
+                container.appendChild(circle);
+            }
+        }
+        
+        // Configuração do slider de veículos
+        function setupVehiclesSlider() {
+            const slider = document.getElementById('vehicles-slider');
+            const prevButton = document.getElementById('slider-prev');
+            const nextButton = document.getElementById('slider-next');
+            
+            // Largura de um card + margem
+            const cardWidth = 330; // 300px + 30px de margem (15px em cada lado)
+            
+            prevButton.addEventListener('click', () => {
+                slider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            });
+            
+            nextButton.addEventListener('click', () => {
+                slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            });
+            
+            // Navegação por teclado
+            slider.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    slider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                    e.preventDefault();
+                } else if (e.key === 'ArrowRight') {
+                    slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                    e.preventDefault();
+                }
+            });
+        }
+
+        // Função para alternar o tema (claro/escuro)
+        function setupThemeToggle() {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            // Verifica o tema preferido do usuário ou o tema salvo
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                body.classList.add(savedTheme);
+                if (savedTheme === 'light-mode') {
+                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggleBtn.setAttribute('aria-label', 'Alternar para tema escuro');
+                } else {
+                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                    themeToggleBtn.setAttribute('aria-label', 'Alternar para tema claro');
+                }
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                body.classList.add('light-mode');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                themeToggleBtn.setAttribute('aria-label', 'Alternar para tema escuro');
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                themeToggleBtn.setAttribute('aria-label', 'Alternar para tema claro');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                if (body.classList.contains('light-mode')) {
+                    body.classList.remove('light-mode');
+                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                    themeToggleBtn.setAttribute('aria-label', 'Alternar para tema claro');
+                    localStorage.setItem('theme', 'dark-mode');
+                } else {
+                    body.classList.add('light-mode');
+                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggleBtn.setAttribute('aria-label', 'Alternar para tema escuro');
+                    localStorage.setItem('theme', 'light-mode');
+                }
+            });
+        }
+
+        // Função para alternar o modo de leitura (acessibilidade) e o leitor de texto
+        function setupAccessibilityToggle() {
+            const accessibilityToggleBtn = document.getElementById('accessibility-toggle');
+            const accessibilityOptionsContainer = document.querySelector('.accessibility-options-container');
+            const daltonismToggleBtn = document.getElementById('daltonism-toggle');
+            const screenReaderToggleBtn = document.getElementById('screen-reader-toggle');
+            const body = document.body;
+
+            // Carregar estados salvos
+            const savedReadingMode = localStorage.getItem('reading-mode'); // Mantido para compatibilidade, mas o modo de leitura agora é ativado pelo leitor de tela
+            const savedDaltonismMode = localStorage.getItem('daltonism-mode');
+
+            // Aplicar modo de leitura (se o leitor de tela estava ativo)
+            if (savedReadingMode === 'enabled') {
+                body.classList.add('reading-mode');
+            }
+
+            // Aplicar modo daltônico
+            if (savedDaltonismMode === 'enabled') {
+                body.classList.add('daltonism-mode');
+                daltonismToggleBtn.classList.add('selected');
+                daltonismToggleBtn.setAttribute('aria-pressed', 'true');
+            }
+
+            // Event listener para o botão principal de acessibilidade
+            accessibilityToggleBtn.addEventListener('click', () => {
+                isAccessibilityMenuOpen = !isAccessibilityMenuOpen;
+                if (isAccessibilityMenuOpen) {
+                    accessibilityOptionsContainer.classList.add('active');
+                    accessibilityToggleBtn.classList.add('selected'); // Marca o botão principal como ativo
+                    accessibilityToggleBtn.setAttribute('aria-label', 'Fechar opções de acessibilidade');
+                } else {
+                    accessibilityOptionsContainer.classList.remove('active');
+                    accessibilityToggleBtn.classList.remove('selected'); // Desmarca o botão principal
+                    accessibilityToggleBtn.setAttribute('aria-label', 'Abrir opções de acessibilidade');
+                }
+            });
+
+            // Event listener para o botão "Daltônico"
+            daltonismToggleBtn.addEventListener('click', () => {
+                if (body.classList.contains('daltonism-mode')) {
+                    body.classList.remove('daltonism-mode');
+                    daltonismToggleBtn.classList.remove('selected');
+                    daltonismToggleBtn.setAttribute('aria-pressed', 'false');
+                    localStorage.setItem('daltonism-mode', 'disabled');
+                } else {
+                    body.classList.add('daltonism-mode');
+                    daltonismToggleBtn.classList.add('selected');
+                    daltonismToggleBtn.setAttribute('aria-pressed', 'true');
+                    localStorage.setItem('daltonism-mode', 'enabled');
+                }
+            });
+
+            // Event listener para o botão "Leitor de Tela"
+            screenReaderToggleBtn.addEventListener('click', () => {
+                if (isTextReaderActive) {
+                    // Desativa o leitor de texto
+                    isTextReaderActive = false;
+                    toggleTextReaderEvents(false);
+                    stopSpeaking(); // Para qualquer fala em andamento
+                    screenReaderToggleBtn.classList.remove('selected');
+                    screenReaderToggleBtn.setAttribute('aria-pressed', 'false');
+                    screenReaderToggleBtn.querySelector('.option-text').textContent = 'Leitor de Tela';
+                    body.classList.remove('reading-mode'); // Desativa o modo de leitura visual
+                    localStorage.setItem('reading-mode', 'disabled');
+                } else {
+                    // Ativa o leitor de texto
+                    isTextReaderActive = true;
+                    toggleTextReaderEvents(true);
+                    screenReaderToggleBtn.classList.add('selected');
+                    screenReaderToggleBtn.setAttribute('aria-pressed', 'true');
+                    screenReaderToggleBtn.querySelector('.option-text').textContent = 'Parar Leitor';
+                    body.classList.add('reading-mode'); // Ativa o modo de leitura visual
+                    localStorage.setItem('reading-mode', 'enabled');
+                    
+                    // Opcional: Focar no conteúdo principal para leitores de tela
+                    const mainContent = document.querySelector('main') || document.querySelector('.content-section');
+                    if (mainContent) {
+                        mainContent.setAttribute('tabindex', '-1'); // Torna o elemento focável
+                        mainContent.focus(); // Move o foco para o conteúdo principal
+                    }
+                }
+            });
+
+            // Ajustar a posição do contêiner de opções quando o menu principal é aberto/fechado
+            function adjustAccessibilityOptionsPosition() {
+                const whatsappButton = document.querySelector('.whatsapp-chat-button');
+                const accessibilityButton = document.getElementById('accessibility-toggle');
+                if (whatsappButton && accessibilityButton) {
+                    const whatsappBottom = parseInt(window.getComputedStyle(whatsappButton).bottom);
+                    const whatsappHeight = whatsappButton.offsetHeight;
+                    const accessibilityButtonHeight = accessibilityButton.offsetHeight;
+                    const gap = 10; // Espaçamento entre os botões
+
+                    // Posição do botão principal de acessibilidade
+                    accessibilityButton.style.bottom = `${whatsappBottom + whatsappHeight + gap}px`;
+
+                    // Posição do contêiner de opções (acima do botão principal)
+                    // A altura do contêiner de opções pode variar, então calculamos dinamicamente
+                    const optionsHeight = accessibilityOptionsContainer.offsetHeight; 
+                    accessibilityOptionsContainer.style.bottom = `${whatsappBottom + whatsappHeight + gap + accessibilityButtonHeight + gap}px`;
+                }
+            }
+
+            // Chamar a função de ajuste na carga e no redimensionamento
+            window.addEventListener('load', adjustAccessibilityOptionsPosition);
+            window.addEventListener('resize', adjustAccessibilityOptionsPosition);
+        }
+        
+        window.addEventListener('load', () => {
+            createCircles();
+            setupVehiclesSlider(); // Configura o slider de veículos
+            setupThemeToggle(); // Inicializa o alternador de tema
+            setupAccessibilityToggle(); // Inicializa o alternador de acessibilidade
+        });
+        
+        window.addEventListener('resize', () => {
+            createCircles(); // Recria os círculos para se adaptar ao novo tamanho da tela
+        });
+    </script>
+</body>
+</html>
